@@ -21,26 +21,22 @@ class App extends StatelessWidget {
 class Home extends StatelessWidget {
   const Home({super.key});
 
-  PreferredSize _appBarView(Size size) {
-    return PreferredSize(
-      preferredSize: Size(size.width, 160),
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 80.0, horizontal: 40),
-        child: BlocBuilder<SampleBloc, SampleState>(builder: (context, state) {
-          return Text(
-            'Point : ${state.totalPoint}',
-            style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
-          );
-        }),
-      ),
-    );
-  }
-
   Widget show() {
     return BlocBuilder<SampleBloc, SampleState>(builder: (context, state) {
-      return Container(
-        height: 300,
-        child: state.path == '' ? Container() : Text(state.path!),
+      return Column(
+        children: [
+          if (state.count >= 0)
+            Text(
+              state.count.toString(),
+              style: TextStyle(fontSize: 20),
+            ),
+          Container(
+            height: 300,
+            child: state.path == ''
+                ? Container()
+                : Image.asset('assets/images/${state.path}'),
+          ),
+        ],
       );
     });
   }
@@ -48,7 +44,6 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _appBarView(MediaQuery.of(context).size),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -59,12 +54,6 @@ class Home extends StatelessWidget {
                 context.read<SampleBloc>().add(IUShowEvent());
               },
               child: Text('아이유 사진'),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                context.read<SampleBloc>().add(KimShowEvent());
-              },
-              child: Text('김채원 사진'),
             ),
           ],
         ),

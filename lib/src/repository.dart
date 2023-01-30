@@ -1,13 +1,11 @@
 class SampleRepository {
-  List<String> kims = ['kim_0.png', 'kim_1.png', 'kim_3.png'];
-  List<String> iu = ['iu_0.png', 'iu_1.png', 'iu_3.png'];
-  Future<String> getKim(int index) async {
-    await Future.delayed(const Duration(milliseconds: 3000));
-    return kims[index % 3];
-  }
+  List<String> iu = ['iu_0.png', 'iu_1.png', 'iu_2.png'];
+  List<int> delay = [2000, 1400, 2500];
 
   Future<String> getIU(int index) async {
-    await Future.delayed(const Duration(milliseconds: 1000));
+    print(index % 3);
+    await Future.delayed(Duration(milliseconds: delay[index % 3]));
+    print('result : ${iu[index % 3]}');
     return iu[index % 3];
   }
 }
